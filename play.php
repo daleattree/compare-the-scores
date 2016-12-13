@@ -4,12 +4,13 @@ use Symfony\Component\VarDumper\VarDumper;
 
 include("vendor/autoload.php");
 
-// Gets the two lines from standard input (is there a better way of doing this?):
-$handle = fopen("php://stdin", "r");
-fscanf($handle,"%d %d %d %d",$a0,$a1,$a2,$a3);
-fscanf($handle,"%d %d %d %d",$b0,$b1,$b2,$b3);
+echo "Provide student 1's scores separated by spaces" . PHP_EOL;
+$line1 = fgets(STDIN);
+echo "Provide student 2's scores separated by spaces" . PHP_EOL;
+$line2 = fgets(STDIN);
 
-VarDumper::dump(array($a0, $a1, $a2, $a3));
-VarDumper::dump(array($b0, $b1, $b2, $b3));
+$student1 = explode(' ', preg_replace('/[^0-9 ]/', '', $line1));
+$student2 = explode(' ', preg_replace('/[^0-9 ]/', '', $line2));
 
-$comparer = new CompareTheScores();
+$engine = new CompareTheScores();
+$engine->determineWinner($student1, $student2);
